@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Mandala Creator </title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Comfortaa:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title"> Mandala Creator </h1>
+            <p class="subtitle">Draw beautiful symmetrical patterns with ease!</p>
+        </header>
+
+        <div class="main-content">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label for="segments" class="control-label">
+                        <span class="emoji">🔢</span> Segments
+                    </label>
+                    <input type="range" id="segments" min="2" max="24" value="8" class="slider">
+                    <span class="value-display" id="segmentsValue">8</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="brushSize" class="control-label">
+                        <span class="emoji">🖌️</span> Brush Size
+                    </label>
+                    <input type="range" id="brushSize" min="1" max="50" value="5" class="slider">
+                    <span class="value-display" id="brushSizeValue">5</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="colorPicker" class="control-label">
+                        <span class="emoji"></span> Color
+                    </label>
+                    <input type="color" id="colorPicker" value="#ff6b9d" class="color-input">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <span class="emoji"></span> Quick Colors
+                    </label>
+                    <div class="color-palette">
+                        <button class="color-btn" data-color="#ff6b9d" style="background: #ff6b9d;"></button>
+                        <button class="color-btn" data-color="#4ecdc4" style="background: #4ecdc4;"></button>
+                        <button class="color-btn" data-color="#ffe66d" style="background: #ffe66d;"></button>
+                        <button class="color-btn" data-color="#a8e6cf" style="background: #a8e6cf;"></button>
+                        <button class="color-btn" data-color="#ff8b94" style="background: #ff8b94;"></button>
+                        <button class="color-btn" data-color="#c7ceea" style="background: #c7ceea;"></button>
+                        <button class="color-btn" data-color="#ffd3a5" style="background: #ffd3a5;"></button>
+                        <button class="color-btn" data-color="#fd79a8" style="background: #fd79a8;"></button>
+                        <button class="color-btn" data-color="#000000" style="background: #000000;"></button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <span class="emoji"></span> Options
+                    </label>
+                    <div class="button-group">
+                        <button id="clearBtn" class="btn btn-secondary">
+                            <span class="emoji"></span> Clear
+                        </button>
+                        <button id="downloadBtn" class="btn btn-primary">
+                            <span class="emoji"></span> Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <span class="emoji"></span> Tips
+                    </label>
+                    <div class="tips">
+                        <p>Draw on the canvas to create symmetrical patterns</p>
+                        <p> Change segments for different symmetry levels</p>
+                        <p> Adjust brush size for different effects</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="mandalaCanvas"></canvas>
+                <div class="canvas-overlay">
+                    <div class="center-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
