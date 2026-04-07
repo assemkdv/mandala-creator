@@ -27,9 +27,6 @@ function getCenter() {
     return { x: canvas.width / 2, y: canvas.height / 2 };
 }
 
-// Smooth point buffer for bezier averaging
-let points = [];
-
 function rotate(dx, dy, a) {
     return [dx * Math.cos(a) - dy * Math.sin(a), dx * Math.sin(a) + dy * Math.cos(a)];
 }
@@ -45,30 +42,24 @@ function drawSymmetricalLine(x1, y1, x2, y2) {
 
     const dx1 = x1 - cx, dy1 = y1 - cy;
     const dx2 = x2 - cx, dy2 = y2 - cy;
-    // midpoint as bezier control — pulls the line into a soft curve
-    const mx = (dx1 + dx2) / 2 * 0.5;
-    const my = (dy1 + dy2) / 2 * 0.5;
 
     for (let i = 0; i < segments; i++) {
         const a = segmentAngle * i;
 
+        // Normal
         const [rx1, ry1] = rotate(dx1, dy1, a);
         const [rx2, ry2] = rotate(dx2, dy2, a);
-        const [rcx, rcy] = rotate(mx, my, a);
-
         ctx.beginPath();
         ctx.moveTo(rx1 + cx, ry1 + cy);
-        ctx.quadraticCurveTo(rcx + cx, rcy + cy, rx2 + cx, ry2 + cy);
+        ctx.lineTo(rx2 + cx, ry2 + cy);
         ctx.stroke();
 
-        // Mirror
+        // Mirror (flip Y)
         const [mx1, my1] = rotate(dx1, -dy1, a);
         const [mx2, my2] = rotate(dx2, -dy2, a);
-        const [mcx, mcy] = rotate(mx, -my, a);
-
         ctx.beginPath();
         ctx.moveTo(mx1 + cx, my1 + cy);
-        ctx.quadraticCurveTo(mcx + cx, mcy + cy, mx2 + cx, my2 + cy);
+        ctx.lineTo(mx2 + cx, my2 + cy);
         ctx.stroke();
     }
 }
