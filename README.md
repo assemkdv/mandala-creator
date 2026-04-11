@@ -1,6 +1,6 @@
 # Mandala Creator 
 
-An interactive web app for creating beautiful, symmetrical mandala patterns in your browser — no installation needed.
+An interactive web app for creating beautiful, symmetrical mandala patterns in your browser.
 
 ## Live Demo
 
@@ -11,7 +11,6 @@ An interactive web app for creating beautiful, symmetrical mandala patterns in y
 - Draw symmetrical mandala patterns in real time
 - Adjustable brush size and color
 - Symmetry controls for different pattern styles
-- Clean, minimal interface
 
 ## Built With
 
