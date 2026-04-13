@@ -175,8 +175,7 @@ body {
 }
 
 .button-group {
-    display: flex;
-    gap: 8px;
+    flex-direction: column;
 }
 
 .btn {
