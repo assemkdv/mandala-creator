@@ -276,3 +276,20 @@ body {
     .controls-panel { grid-template-columns: 1fr; }
     .title { font-size: 1.4rem; }
 }
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: #c084a0;
+}
+
+.footer a {
+    color: #e8638a;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
