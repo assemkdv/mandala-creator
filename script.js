@@ -9,10 +9,7 @@ let brushSize = 5;
 let currentColor = '#e8638a';
 let lastX = 0;
 let lastY = 0;
-let opacity = 1;
-let brushShape = 'circle';
 
-// ── Undo / Redo ───────────────────────────────────────────────────────────────
 function saveState() {
   undoStack.push(canvas.toDataURL());
   if (undoStack.length > 20) undoStack.shift();
@@ -35,7 +32,6 @@ function redo() {
   img.src = redoStack.pop();
 }
 
-// ── Canvas init ───────────────────────────────────────────────────────────────
 function initCanvas() {
   const container = canvas.parentElement;
   const size = Math.min(container.clientWidth - 48, 700);
@@ -53,7 +49,6 @@ function initCanvas() {
 window.addEventListener('load', initCanvas);
 window.addEventListener('resize', initCanvas);
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
 function getCenter() {
   return { x: canvas.width / 2, y: canvas.height / 2 };
 }
@@ -62,12 +57,12 @@ function rotate(dx, dy, a) {
   return [dx * Math.cos(a) - dy * Math.sin(a), dx * Math.sin(a) + dy * Math.cos(a)];
 }
 
-// ── Drawing ───────────────────────────────────────────────────────────────────
 function drawSymmetricalLine(x1, y1, x2, y2) {
   const { x: cx, y: cy } = getCenter();
   const segmentAngle = (2 * Math.PI) / segments;
 
-  ctx.lineCap = brushShape === 'square' ? 'square' : 'round';
+  ctx.lineWidth = brushSize;
+  ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.strokeStyle = currentColor;
 
@@ -79,51 +74,26 @@ function drawSymmetricalLine(x1, y1, x2, y2) {
 
     const [rx1, ry1] = rotate(dx1, dy1, a);
     const [rx2, ry2] = rotate(dx2, dy2, a);
-    drawStroke(rx1 + cx, ry1 + cy, rx2 + cx, ry2 + cy);
+    ctx.beginPath();
+    ctx.moveTo(rx1 + cx, ry1 + cy);
+    ctx.lineTo(rx2 + cx, ry2 + cy);
+    ctx.stroke();
 
     const [mx1, my1] = rotate(dx1, -dy1, a);
     const [mx2, my2] = rotate(dx2, -dy2, a);
-    drawStroke(mx1 + cx, my1 + cy, mx2 + cx, my2 + cy);
+    ctx.beginPath();
+    ctx.moveTo(mx1 + cx, my1 + cy);
+    ctx.lineTo(mx2 + cx, my2 + cy);
+    ctx.stroke();
   }
-
-  // Always reset globalAlpha so nothing else is affected
-  ctx.globalAlpha = 1;
 }
 
-function drawStroke(x1, y1, x2, y2) {
-  if (brushShape === 'soft') {
-    // Feathered outer glow passes
-    for (let s = 3; s >= 1; s--) {
-      ctx.globalAlpha = (opacity * 0.15) / s;
-      ctx.lineWidth = brushSize * (1 + s * 0.8);
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
-    }
-    // Sharp center line
-    ctx.globalAlpha = opacity;
-    ctx.lineWidth = brushSize * 0.5;
-  } else {
-    ctx.globalAlpha = opacity;
-    ctx.lineWidth = brushSize;
-  }
-
-  ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.stroke();
-}
-
-// ── Input helpers ─────────────────────────────────────────────────────────────
 function getPos(e) {
   const rect = canvas.getBoundingClientRect();
   const src = e.touches ? e.touches[0] : e;
   return [src.clientX - rect.left, src.clientY - rect.top];
 }
 
-// ── Canvas events ─────────────────────────────────────────────────────────────
 canvas.addEventListener('mousedown', e => {
   saveState();
   isDrawing = true;
@@ -160,7 +130,6 @@ canvas.addEventListener('touchend', e => {
   isDrawing = false;
 });
 
-// ── Controls ──────────────────────────────────────────────────────────────────
 document.getElementById('segments').addEventListener('input', e => {
   segments = parseInt(e.target.value);
   document.getElementById('segmentsValue').textContent = segments;
@@ -169,19 +138,6 @@ document.getElementById('segments').addEventListener('input', e => {
 document.getElementById('brushSize').addEventListener('input', e => {
   brushSize = parseInt(e.target.value);
   document.getElementById('brushSizeValue').textContent = brushSize;
-});
-
-document.getElementById('opacity').addEventListener('input', e => {
-  opacity = parseFloat(e.target.value);
-  document.getElementById('opacityValue').textContent = Math.round(opacity * 100) + '%';
-});
-
-document.querySelectorAll('.brush-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.brush-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    brushShape = btn.dataset.shape;
-  });
 });
 
 const colorPicker = document.getElementById('colorPicker');
@@ -221,7 +177,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
 document.getElementById('undoBtn').addEventListener('click', undo);
 document.getElementById('redoBtn').addEventListener('click', redo);
 
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo(); }
   if ((e.ctrlKey || e.metaKey) && e.key === 'y') { e.preventDefault(); redo(); }
 });

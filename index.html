@@ -36,25 +36,6 @@
         </div>
 
         <div class="control-group">
-          <label class="control-label">
-            <span class="emoji">◐</span> Opacity
-          </label>
-          <input type="range" id="opacity" min="0.05" max="1" step="0.05" value="1" class="slider">
-          <span class="value-display" id="opacityValue">100%</span>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label">
-            <span class="emoji">✦</span> Brush Shape
-          </label>
-          <div class="brush-btn-group">
-            <button class="brush-btn active" data-shape="circle">● Circle</button>
-            <button class="brush-btn" data-shape="square">■ Square</button>
-            <button class="brush-btn" data-shape="soft">❋ Soft</button>
-          </div>
-        </div>
-
-        <div class="control-group">
           <label for="colorPicker" class="control-label">
             <span class="emoji"></span> Color
           </label>
@@ -82,11 +63,11 @@
           <label class="control-label">
             <span class="emoji"></span> Actions
           </label>
-          <div class="actions-grid">
+          <div class="button-group">
             <button id="undoBtn" class="btn btn-secondary">↩ Undo</button>
             <button id="redoBtn" class="btn btn-secondary">↪ Redo</button>
-            <button id="clearBtn" class="btn btn-secondary">✕ Clear</button>
-            <button id="downloadBtn" class="btn btn-primary">⬇ Download</button>
+            <button id="clearBtn" class="btn btn-secondary">Clear</button>
+            <button id="downloadBtn" class="btn btn-primary">Download</button>
           </div>
         </div>
 
@@ -98,8 +79,6 @@
             <p>Draw anywhere on the canvas</p>
             <p>More segments = more symmetry</p>
             <p>Try a small brush for fine detail</p>
-            <p>Low opacity layers build up richly</p>
-            <p>Soft brush adds a feathered glow</p>
           </div>
         </div>
 
@@ -112,6 +91,10 @@
         </div>
       </div>
     </div>
+
+    <footer class="footer">
+      Made with ♥ by <a href="https://github.com/assemkdv">Assem Kadirova</a>
+    </footer>
   </div>
 
   <script src="script.js"></script>
