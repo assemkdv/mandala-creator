@@ -1,102 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Mandala Creator </title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Comfortaa:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandala Creator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <header class="header">
-      <h1 class="title"> Mandala Creator </h1>
-      <p class="subtitle">Draw beautiful symmetrical patterns with ease!</p>
-    </header>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Mandala Creator</h1>
+            <p class="subtitle">Draw symmetrical patterns</p>
+        </header>
 
-    <div class="main-content">
-      <div class="controls-panel">
+        <div class="main-content">
+            <div class="controls-panel">
 
-        <div class="control-group">
-          <label for="segments" class="control-label">
-            <span class="emoji">🔢</span> Segments
-          </label>
-          <input type="range" id="segments" min="2" max="24" value="8" class="slider">
-          <span class="value-display" id="segmentsValue">8</span>
+                <div class="control-group">
+                    <label for="segments" class="control-label">Segments</label>
+                    <input type="range" id="segments" min="2" max="24" value="8" class="slider">
+                    <span class="value-display" id="segmentsValue">8</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="brushSize" class="control-label">Brush Size</label>
+                    <input type="range" id="brushSize" min="1" max="50" value="5" class="slider">
+                    <span class="value-display" id="brushSizeValue">5</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="colorPicker" class="control-label">Color</label>
+                    <input type="color" id="colorPicker" value="#e8638a" class="color-input">
+                    <div class="color-palette" style="margin-top: 12px;">
+                        <button class="color-btn" data-color="#e8638a" style="background:#e8638a;"></button>
+                        <button class="color-btn" data-color="#f9a8c4" style="background:#f9a8c4;"></button>
+                        <button class="color-btn" data-color="#ffd6e8" style="background:#ffd6e8;"></button>
+                        <button class="color-btn" data-color="#a8d4d4" style="background:#a8d4d4;"></button>
+                        <button class="color-btn" data-color="#b8a8e8" style="background:#b8a8e8;"></button>
+                        <button class="color-btn" data-color="#ffc9a3" style="background:#ffc9a3;"></button>
+                        <button class="color-btn" data-color="#a8c8e8" style="background:#a8c8e8;"></button>
+                        <button class="color-btn" data-color="#b8e8a8" style="background:#b8e8a8;"></button>
+                        <button class="color-btn" data-color="#2d2d2d" style="background:#2d2d2d;"></button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Actions</label>
+                    <div class="button-group">
+                        <button id="undoBtn" class="btn btn-secondary">↩ Undo</button>
+                        <button id="redoBtn" class="btn btn-secondary">↪ Redo</button>
+                        <button id="clearBtn" class="btn btn-secondary">Clear</button>
+                        <button id="downloadBtn" class="btn btn-primary">Download</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Tips</label>
+                    <div class="tips">
+                        <p>Draw anywhere on the canvas</p>
+                        <p>More segments = more symmetry</p>
+                        <p>Try a small brush for fine detail</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="mandalaCanvas"></canvas>
+                <div class="canvas-overlay">
+                    <div class="center-dot"></div>
+                </div>
+            </div>
         </div>
 
-        <div class="control-group">
-          <label for="brushSize" class="control-label">
-            <span class="emoji">🖌️</span> Brush Size
-          </label>
-          <input type="range" id="brushSize" min="1" max="50" value="5" class="slider">
-          <span class="value-display" id="brushSizeValue">5</span>
-        </div>
+        <footer class="footer">
+            <p>Made with ♥ by <a href="https://github.com/assemkdv" target="_blank">Assem Kadirova</a></p>
+        </footer>
 
-        <div class="control-group">
-          <label for="colorPicker" class="control-label">
-            <span class="emoji"></span> Color
-          </label>
-          <input type="color" id="colorPicker" value="#ff6b9d" class="color-input">
-        </div>
-
-        <div class="control-group">
-          <label class="control-label">
-            <span class="emoji"></span> Quick Colors
-          </label>
-          <div class="color-palette">
-            <button class="color-btn" data-color="#ff6b9d" style="background: #ff6b9d;"></button>
-            <button class="color-btn" data-color="#4ecdc4" style="background: #4ecdc4;"></button>
-            <button class="color-btn" data-color="#ffe66d" style="background: #ffe66d;"></button>
-            <button class="color-btn" data-color="#a8e6cf" style="background: #a8e6cf;"></button>
-            <button class="color-btn" data-color="#ff8b94" style="background: #ff8b94;"></button>
-            <button class="color-btn" data-color="#c7ceea" style="background: #c7ceea;"></button>
-            <button class="color-btn" data-color="#ffd3a5" style="background: #ffd3a5;"></button>
-            <button class="color-btn" data-color="#fd79a8" style="background: #fd79a8;"></button>
-            <button class="color-btn" data-color="#000000" style="background: #000000;"></button>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label">
-            <span class="emoji"></span> Actions
-          </label>
-          <div class="button-group">
-            <button id="undoBtn" class="btn btn-secondary">↩ Undo</button>
-            <button id="redoBtn" class="btn btn-secondary">↪ Redo</button>
-            <button id="clearBtn" class="btn btn-secondary">Clear</button>
-            <button id="downloadBtn" class="btn btn-primary">Download</button>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label">
-            <span class="emoji"></span> Tips
-          </label>
-          <div class="tips">
-            <p>Draw anywhere on the canvas</p>
-            <p>More segments = more symmetry</p>
-            <p>Try a small brush for fine detail</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="canvas-container">
-        <canvas id="mandalaCanvas"></canvas>
-        <div class="canvas-overlay">
-          <div class="center-dot"></div>
-        </div>
-      </div>
     </div>
 
-    <footer class="footer">
-      Made with ♥ by <a href="https://github.com/assemkdv">Assem Kadirova</a>
-    </footer>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
