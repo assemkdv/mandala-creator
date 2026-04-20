@@ -125,3 +125,42 @@ document.getElementById('segments').addEventListener('input', e => {
   segments = parseInt(e.target.value);
   document.getElementById('segmentsValue').textContent = segments;
 });
+
+document.getElementById('brushSize').addEventListener('input', e => {
+  brushSize = parseInt(e.target.value);
+  document.getElementById('brushSizeValue').textContent = brushSize;
+});
+
+const colorPicker = document.getElementById('colorPicker');
+const colorButtons = document.querySelectorAll('.color-btn');
+
+colorPicker.addEventListener('input', e => {
+  currentColor = e.target.value;
+  updateActiveColor(currentColor);
+});
+
+colorButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentColor = btn.dataset.color;
+    colorPicker.value = currentColor;
+    updateActiveColor(currentColor);
+  });
+});
+
+function updateActiveColor(color) {
+  colorButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.color === color));
+}
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if (confirm('Clear the canvas?')) {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+});
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.download = `mandala-${Date.now()}.png`;
+  link.href = canvas.toDataURL();
+  link.click();
+});

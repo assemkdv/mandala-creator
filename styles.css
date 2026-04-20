@@ -131,6 +131,96 @@ body {
   border-radius: 20px;
 }
 
+.color-input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid var(--pink-border);
+  border-radius: 8px;
+  cursor: pointer;
+  background: none;
+  padding: 2px;
+}
+
+.color-input:hover {
+  border-color: var(--pink-light);
+}
+
+.color-palette {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.color-btn {
+  width: 100%;
+  height: 36px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.color-btn:hover {
+  transform: scale(1.06);
+}
+
+.color-btn.active {
+  border-color: var(--text);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--pink);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #d44d78;
+}
+
+.btn-secondary {
+  background: var(--pink-pale);
+  color: var(--pink);
+  border: 1px solid var(--pink-border);
+}
+
+.btn-secondary:hover {
+  background: #fce0ec;
+}
+
+.tips {
+  margin-top: 0;
+}
+
+.tips p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.tips p:last-child {
+  margin-bottom: 0;
+}
+
 /* Canvas */
 .canvas-container {
   background: var(--white);
