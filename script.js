@@ -1,3 +1,5 @@
+const undoStack = [];
+const redoStack = [];
 const canvas = document.getElementById('mandalaCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -7,6 +9,28 @@ let brushSize = 5;
 let currentColor = '#e8638a';
 let lastX = 0;
 let lastY = 0;
+
+function saveState() {
+  undoStack.push(canvas.toDataURL());
+  if (undoStack.length > 20) undoStack.shift();
+  redoStack.length = 0;
+}
+
+function undo() {
+  if (undoStack.length === 0) return;
+  redoStack.push(canvas.toDataURL());
+  const img = new Image();
+  img.onload = () => ctx.drawImage(img, 0, 0);
+  img.src = undoStack.pop();
+}
+
+function redo() {
+  if (redoStack.length === 0) return;
+  undoStack.push(canvas.toDataURL());
+  const img = new Image();
+  img.onload = () => ctx.drawImage(img, 0, 0);
+  img.src = redoStack.pop();
+}
 
 function initCanvas(preserveContent = false) {
   const container = canvas.parentElement;
@@ -88,6 +112,7 @@ function getPos(e) {
 }
 
 canvas.addEventListener('mousedown', e => {
+  saveState();
   isDrawing = true;
   [lastX, lastY] = getPos(e);
 });
@@ -104,6 +129,7 @@ canvas.addEventListener('mouseleave', () => isDrawing = false);
 
 canvas.addEventListener('touchstart', e => {
   e.preventDefault();
+  saveState();
   isDrawing = true;
   [lastX, lastY] = getPos(e);
 }, { passive: false });
@@ -164,3 +190,13 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   link.href = canvas.toDataURL();
   link.click();
 });
+
+document.getElementById('undoBtn').addEventListener('click', undo);
+document.getElementById('redoBtn').addEventListener('click', redo);
+
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'y') { e.preventDefault(); redo(); }
+});
+
+updateActiveColor(currentColor);
