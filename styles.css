@@ -189,11 +189,6 @@ body {
   font-size: 0.82rem;
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 8px;
-}
-
-.btn:last-child {
-  margin-bottom: 0;
 }
 
 .btn-primary {
@@ -213,12 +208,6 @@ body {
 
 .btn-secondary:hover {
   background: #fce0ec;
-}
-
-.btn-secondary.active {
-  background: var(--pink);
-  color: white;
-  border-color: var(--pink);
 }
 
 .tips {
@@ -255,10 +244,6 @@ body {
   cursor: crosshair;
   background: white;
   max-width: 100%;
-}
-
-#mandalaCanvas.erasing {
-  cursor: cell;
 }
 
 .canvas-overlay {
