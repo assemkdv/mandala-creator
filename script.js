@@ -4,6 +4,7 @@ const canvas = document.getElementById('mandalaCanvas');
 const ctx = canvas.getContext('2d');
 
 let isDrawing = false;
+let isErasing = false;
 let segments = 8;
 let brushSize = 5;
 let currentColor = '#e8638a';
@@ -81,7 +82,7 @@ function drawSymmetricalLine(x1, y1, x2, y2) {
   ctx.lineWidth = brushSize;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
-  ctx.strokeStyle = currentColor;
+  ctx.strokeStyle = isErasing ? '#ffffff' : currentColor;
 
   const dx1 = x1 - cx, dy1 = y1 - cy;
   const dx2 = x2 - cx, dy2 = y2 - cy;
@@ -160,8 +161,15 @@ document.getElementById('brushSize').addEventListener('input', e => {
 const colorPicker = document.getElementById('colorPicker');
 const colorButtons = document.querySelectorAll('.color-btn');
 
+function setErasing(active) {
+  isErasing = active;
+  document.getElementById('eraserBtn').classList.toggle('active', active);
+  canvas.classList.toggle('erasing', active);
+}
+
 colorPicker.addEventListener('input', e => {
   currentColor = e.target.value;
+  setErasing(false);
   updateActiveColor(currentColor);
 });
 
@@ -169,6 +177,7 @@ colorButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     currentColor = btn.dataset.color;
     colorPicker.value = currentColor;
+    setErasing(false);
     updateActiveColor(currentColor);
   });
 });
@@ -176,6 +185,10 @@ colorButtons.forEach(btn => {
 function updateActiveColor(color) {
   colorButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.color === color));
 }
+
+document.getElementById('eraserBtn').addEventListener('click', () => {
+  setErasing(!isErasing);
+});
 
 document.getElementById('clearBtn').addEventListener('click', () => {
   if (confirm('Clear the canvas?')) {
