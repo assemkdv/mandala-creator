@@ -32,9 +32,15 @@ function redo() {
   img.src = redoStack.pop();
 }
 
-function initCanvas() {
+function initCanvas(preserveContent = false) {
   const container = canvas.parentElement;
   const size = Math.min(container.clientWidth - 48, 700);
+
+  let savedImage = null;
+  if (preserveContent && canvas.width > 0) {
+    savedImage = canvas.toDataURL();
+  }
+
   canvas.width = size;
   canvas.height = size;
 
@@ -44,10 +50,21 @@ function initCanvas() {
 
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  if (savedImage) {
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    img.src = savedImage;
+  }
 }
 
-window.addEventListener('load', initCanvas);
-window.addEventListener('resize', initCanvas);
+window.addEventListener('load', () => initCanvas(false));
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => initCanvas(true), 150);
+});
 
 function getCenter() {
   return { x: canvas.width / 2, y: canvas.height / 2 };
