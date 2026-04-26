@@ -261,9 +261,16 @@ body {
   .main-content {
     grid-template-columns: 1fr;
   }
+
+  .controls-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
 }
 
 @media (max-width: 560px) {
   body { padding: 16px; }
+  .controls-panel { grid-template-columns: 1fr; }
   .title { font-size: 1.4rem; }
 }
