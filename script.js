@@ -186,7 +186,7 @@ document.getElementById('clearBtn').addEventListener('click', () => {
 
 document.getElementById('downloadBtn').addEventListener('click', () => {
   const link = document.createElement('a');
-  link.download = `mandala-${Date.now()}.png`;
+  link.download = `symmetra-${Date.now()}.png`;
   link.href = canvas.toDataURL();
   link.click();
 });
