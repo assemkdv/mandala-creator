@@ -108,7 +108,9 @@ function drawSymmetricalLine(x1, y1, x2, y2) {
 function getPos(e) {
   const rect = canvas.getBoundingClientRect();
   const src = e.touches ? e.touches[0] : e;
-  return [src.clientX - rect.left, src.clientY - rect.top];
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  return [(src.clientX - rect.left) * scaleX, (src.clientY - rect.top) * scaleY];
 }
 
 canvas.addEventListener('mousedown', e => {
