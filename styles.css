@@ -34,13 +34,24 @@ body {
   margin-bottom: 28px;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+}
+
 .title {
   font-family: 'Poppins', sans-serif;
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--pink);
   letter-spacing: -0.3px;
-  margin-bottom: 4px;
 }
 
 .subtitle {
